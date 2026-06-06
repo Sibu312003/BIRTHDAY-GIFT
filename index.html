@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love! ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe3e3 0%, #ffd1d1 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Floating Hearts */
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 75, 110, 0.3);
+            animation: float Up 6s linear infinite;
+            bottom: -50px;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* Gift Box Wrapper */
+        .gift-container {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            margin-top: 50px;
+        }
+
+        .gift-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* Instruction text */
+        .instruction {
+            color: #ff4b6e;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* CSS Gift Box Design */
+        .gift-box {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: #ff4b6e;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .gift-box::before { /* Vertical Ribbon */
+            content: '';
+            position: absolute;
+            left: 65px;
+            width: 20px;
+            height: 100%;
+            background: #ffe600;
+        }
+
+        .gift-lid {
+            position: absolute;
+            width: 160px;
+            height: 40px;
+            background: #ff3356;
+            top: -40px;
+            left: -5px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        .gift-lid::before { /* Lid Ribbon */
+            content: '';
+            position: absolute;
+            left: 70px;
+            width: 20px;
+            height: 100%;
+            background: #ffe600;
+        }
+
+        /* Bow on top */
+        .bow {
+            position: absolute;
+            top: -20px;
+            left: 55px;
+            width: 40px;
+            height: 20px;
+            background: #ffe600;
+            border-radius: 50% 50% 0 0;
+        }
+
+        /* Opened State Animation */
+        .gift-container.open .gift-lid {
+            transform: translateY(-120px) rotate(-20deg);
+            opacity: 0;
+        }
+        
+        .gift-container.open {
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Hidden Content Card */
+        .birthday-card {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 75, 110, 0.2);
+            border: 2px solid #ffb3c1;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .birthday-card.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .birthday-card h1 {
+            color: #d93856;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Image Gallery */
+        .photo-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .photo-gallery img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .photo-gallery img:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        /* Message Styling */
+        .message {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .signature {
+            color: #ff4b6e;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element for Birthday Song -->
+    <!-- Replace "your-song.mp3" with your actual music file path -->
+    <audio id="birthdaySong" src="your-song.mp3" loop></audio>
+
+    <div class="container">
+        
+        <!-- The Initial Gift Box Section -->
+        <div class="gift-wrapper" id="giftSection">
+            <p class="instruction">🎁 Tap to open your birthday surprise! 🎁</p>
+            <div class="gift-container" onclick="openGift()">
+                <div class="gift-lid">
+                    <div class="bow"></div>
+                </div>
+                <div class="gift-box"></div>
+            </div>
+        </div>
+
+        <!-- The Hidden Birthday Content -->
+        <div class="birthday-card" id="cardSection">
+            <h1>✨ Happy Birthday, Beautiful! ✨</h1>
+            
+            <div class="photo-gallery">
+                <!-- Replace these with your actual image paths -->
+                <img src="your-photo1.jpg" alt="Our Memory 1">
+                <img src="your-photo2.jpg" alt="Our Memory 2">
+            </div>
+
+            <p class="message">
+                "To the most incredible girl who fills my life with endless happiness and love: May your day be as bright, beautiful, and wonderful as you are. Thank you for being my smile, my peace, and my favorite person. I love you to the moon and back!"
+            </p>
+            
+            <p class="signature">❤️ Forever & Always, Yours</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle opening the gift box
+        function openGift() {
+            const giftContainer = document.querySelector('.gift-container');
+            const giftSection = document.getElementById('giftSection');
+            const cardSection = document.getElementById('cardSection');
+            const song = document.getElementById('birthdaySong');
+
+            // Trigger box open animation
+            giftContainer.classList.add('open');
+
+            // Try playing the background audio
+            song.play().catch(error => {
+                console.log("Audio autoplay was blocked, but playing triggered via user interaction.");
+            });
+
+            // Smoothly fade out the box section and fade in the card
+            setTimeout(() => {
+                giftSection.style.display = 'none';
+                cardSection.style.display = 'block';
+                
+                // Trigger transition effect
+                setTimeout(() => {
+                    cardSection.classList.add('show');
+                }, 50);
+            }, 500);
+        }
+
+        // Generate background floating hearts dynamically
+        function createHearts() {
+            const body = document.body;
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-bg');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+                body.appendChild(heart);
+            }
+        }
+        
+        // Initialize background hearts on load
+        window.onload = createHearts;
+    </script>
+</body>
+</html>
